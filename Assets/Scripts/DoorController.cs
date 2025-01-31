@@ -1,19 +1,22 @@
 using UnityEngine;
+using TMPro;
 
 public class DoorController : MonoBehaviour
 {
     public Transform door; // Referencia a la puerta
-    public Vector3 openPositionOffset = new Vector3(0f, 0f, 5f);
-    public float openSpeed = 5f; // Velocidad de apertura
+    private Vector3 openPositionOffset = new Vector3(2f, 0f, 0f);
+    public float openSpeed = 3f; // Velocidad de apertura
     public KeyCode openKey = KeyCode.X; // Tecla para abrir la puerta
     public string playerTag = "Player"; // Tag del jugador
     public int requiredKeys = 5; // Número de llaves necesarias para abrir la puerta
+    public KeyController keyManager;
+    public TextMeshProUGUI congratulationMessageText;
 
     private Vector3 closedPosition; // Posición inicial (cerrada)
     private Vector3 targetPosition; // Posición objetivo
     private bool isOpen = false; // Estado de la puerta
     private bool playerNearby = false; // ¿Está el jugador cerca?
-    private Keys keyManager;
+    
 
     void Start()
     {
@@ -34,6 +37,7 @@ public class DoorController : MonoBehaviour
             if (isOpen)
             {
                 targetPosition = closedPosition + openPositionOffset;
+                congratulationMessageText.text = "¡FELCIDADES! Has ganado c:";
             }
             else
             {
@@ -45,19 +49,19 @@ public class DoorController : MonoBehaviour
         door.localPosition = Vector3.Lerp(door.localPosition, targetPosition, Time.deltaTime * openSpeed);
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
         // Verificar si el jugador entró en el área de la puerta
-        if (other.CompareTag(playerTag))
+        if (collision.collider.CompareTag(playerTag))
         {
             playerNearby = true;
         }
     }
 
-    void OnTriggerExit(Collider other)
+    void OnCollisionExit(Collision collision)
     {
         // Verificar si el jugador salió del área de la puerta
-        if (other.CompareTag(playerTag))
+        if (collision.collider.CompareTag(playerTag))
         {
             playerNearby = false;
         }

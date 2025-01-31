@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
-    public float maxSpeed = 15f;
+    public float speed = 3f;
+    public float maxSpeed = 10f;
 
     private Rigidbody rb;
     private Vector3 moveDirection;
- 
-    
+    private Vector3 startPosition = new Vector3(-2f, 0.4f, -5.9f); //El jugador siempre inicia en este punto
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        transform.position = startPosition;
+
     }
 
     void FixedUpdate()

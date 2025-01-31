@@ -3,8 +3,12 @@
 public class CameraFollow : MonoBehaviour
 {
     public Transform target; // Referencia al jugador
-    public Vector3 offset = new Vector3(0f, 2f, -3f); // Posición fija detrás del jugador
+    public Vector3 offset; // Posición fija detrás del jugador
     public float rotationSpeed = 5f; // Velocidad de rotación de la cámara
+
+    void Update() {
+        offset = new Vector3(0f, 3f, -3f);
+    }
 
     void LateUpdate()
     {
